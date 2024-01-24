@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mythical Creature Generator</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@900&family=Source+Sans+Pro:wght@300&family=Tangerine:wght@700&display=swap" rel="stylesheet">
+<style>
+    body {
+        font-family: 'Source Sans Pro', sans-serif;
+        background-color: #1a1a1a;
+        color: white;
+        text-align: center;
+    }
+    .header {
+        font-family: 'Roboto', sans-serif;
+        font-size: 72px;
+    }
+    .sub-header {
+        font-family: 'Tangerine', cursive;
+        font-size: 48px;
+        color: red;
+    }
+    .generator-container {
+        margin: 20px;
+    }
+    #creature-description {
+        margin-top: 20px;
+        font-size: 24px;
+    }
+    button {
+        font-size: 24px;
+        padding: 10px 20px;
+        margin-top: 20px;
+    }
+    .error-message {
+        color: red;
+        margin-top: 20px;
+    }
+</style>
+</head>
+<body>
+    <div class="header">mythical</div>
+    <div class="sub-header">Creature Generator</div>
+    <div class="generator-container">
+        <p id="creature-description">Press generate to create a mythical creature.</p>
+        <button onclick="generateCreature()">Generate New</button>
+        <p id="error-message" class="error-message"></p>
+    </div>
+
+    <script>
+        const animals = ['an elephant', 'a lion', 'a tiger', 'an eagle', 'a dragon', 'a fish'];
+        const features = ['horns', 'wings', 'a tail', 'sharp claws', 'whiskers', 'multiple heads'];
+
+        function getRandomElement(arr) {
+            return arr[Math.floor(Math.random() * arr.length)];
+        }
+
+        function displayError(message) {
+            document.getElementById('error-message').innerText = message;
+        }
+
+        function generateCreature() {
+            try {
+                const headAnimal = getRandomElement(animals);
+                const bodyAnimal = getRandomElement(animals.filter(animal => animal !== headAnimal)); // Ensure different animals
+                const feature = getRandomElement(features);
+                const description = `A creature with the head of ${headAnimal} and the body of ${bodyAnimal} with ${feature}.`;
+                document.getElementById('creature-description').innerText = description;
+                
+                // Simulate image generation
+                generateImage(description);
+            } catch (error) {
+                displayError('An error occurred while generating the creature.');
+                console.error(error);
+            }
+        }
+
+        function generateImage(description) {
+            // This function would typically make an API call to a service like DALL-E to generate an image.
+            // Since we can't do that here, we'll just simulate the behavior.
+
+            // Mock image URL, in a real scenario this would be the URL of the generated image.
+            const imageUrl = 'https://via.placeholder.com/150';
+
+            const imageElement = document.createElement('img');
+            imageElement.src = imageUrl;
+            imageElement.alt = description;
+            imageElement.title = description;
+
+            // Remove any existing images before appending the new one
+            const previousImage = document.querySelector('.generator-container img');
+            if (previousImage) {
+                previousImage.remove();
+            }
+
+            // Append the new image to the container
+            document.querySelector('.generator-container').appendChild(imageElement);
+        }
+    </script>
+</body>
+</html>
