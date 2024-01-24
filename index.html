@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Random Phrase Generator with External Image API</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 50px;
+    }
+
+    #generatedPhrase {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    #generatedImage {
+      max-width: 100%;
+      height: auto;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Random Phrase and Image Generator</h1>
+  <div id="generatedPhrase"></div>
+  <img id="generatedImage" alt="Generated Image">
+
+  <script>
+    // Function to generate a random phrase
+    function generateRandomPhrase() {
+      const animals = ['Cat', 'Dog', 'Elephant', 'Lion', 'Giraffe'];
+      const features = ['Stripes', 'Spots', 'Antlers', 'Wings', 'Horns'];
+
+      const randomAnimal = animals[Math.floor(Math.random() * animals.length)];
+      const randomFeature = features[Math.floor(Math.random() * features.length)];
+
+      return `${randomAnimal} with ${randomFeature}`;
+    }
+
+    // Function to fetch an image from the Lorem Picsum API
+    async function fetchImage() {
+      try {
+        const response = await fetch('https://picsum.photos/300'); // Change the size if needed
+        return response.url;
+      } catch (error) {
+        console.error('Error fetching image:', error);
+        return 'https://via.placeholder.com/300'; // Fallback to a placeholder image on error
+      }
+    }
+
+    // Function to update the generated phrase and image
+    async function updateGeneratedContent() {
+      const generatedPhraseElement = document.getElementById('generatedPhrase');
+      const generatedImageElement = document.getElementById('generatedImage');
+
+      const randomPhrase = generateRandomPhrase();
+      const imageUrl = await fetchImage();
+
+      generatedPhraseElement.textContent = randomPhrase;
+      generatedImageElement.src = imageUrl;
+      generatedImageElement.alt = randomPhrase;
+    }
+
+    // Initial update on page load
+    updateGeneratedContent();
+  </script>
+</body>
+</html>
