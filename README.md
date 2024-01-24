@@ -1,0 +1,1 @@
+# MythicalCreatureGenerator.github.io
