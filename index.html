@@ -11,27 +11,51 @@
         background-color: #1a1a1a;
         color: white;
         text-align: center;
+        overflow: hidden;
     }
     .header {
         font-family: 'Roboto', sans-serif;
-        font-size: 72px;
+        font-size: 120px;
+        position: relative;
+	margin-top: 90px;
+        left: -80px;
+	margin-bottom: 0;
     }
     .sub-header {
         font-family: 'Tangerine', cursive;
-        font-size: 48px;
+        font-size: 80px;
         color: red;
+        position: relative;
+        right: -80px;
+        top: -50px; /* Adjust this value to control the overlap */
+	margin-bottom: 0;
     }
     .generator-container {
         margin: 20px;
+        position: relative;
     }
     #creature-description {
-        margin-top: 20px;
-        font-size: 24px;
+        font-size: 18px; /* Smaller font size for the description */
+        margin-top: 60px;
     }
     button {
-        font-size: 24px;
-        padding: 10px 20px;
-        margin-top: 20px;
+    font-size: 13px;
+    font-family: 'Source Sans Pro', sans-serif;
+    padding: 5px 10px;
+    margin-top: -40px; /* Adjust this as necessary to bring the button close to the header */
+    border: 2px solid white;
+    background: transparent;
+    color: white;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+    display: block; /* To apply margin correctly */
+    margin-left: auto;
+    margin-right: auto;
+}
+    button:hover {
+        background-color: white;
+        color: #1a1a1a;
     }
     .error-message {
         color: red;
@@ -42,15 +66,16 @@
 <body>
     <div class="header">mythical</div>
     <div class="sub-header">Creature Generator</div>
+     <button onclick="generateCreature()">Generate New</button>
     <div class="generator-container">
         <p id="creature-description">Press generate to create a mythical creature.</p>
-        <button onclick="generateCreature()">Generate New</button>
         <p id="error-message" class="error-message"></p>
     </div>
-
     <script>
-        const animals = ['an elephant', 'a lion', 'a tiger', 'an eagle', 'a dragon', 'a fish'];
-        const features = ['horns', 'wings', 'a tail', 'sharp claws', 'whiskers', 'multiple heads'];
+
+        const animals = ['an elephant', 'a lion', 'a tiger', 'an eagle', 'a dragon', 'a fish', 'a giraffe', 'a zebra', 'a hippopotamus', 'a rhinoceros', 'a gorilla', 'a chimpanzee', 'a koala', 'a kangaroo', 'a panda', 'an alligator', 'a crocodile', 'an ostrich', ' a flamingo','a peacock', 'an eagle', 'an owl', 'a falcon', 'a penguin', 'a dolphin', 'a shark', 'an octopus', 'a seahorse', 'a jellyfish', 'a wolf', 'a bear', 'a fox', 'a bison'];
+        const features = ['horns', 'wings', 'a tail', 'sharp claws', 'whiskers', 'multiple heads', 'antlers', 'a singular horn', 'stripes', 'spots',
+'horns of a ram', 'a dragon tail', 'a fish tail', 'a monkey tail', 'fire-breathing capability', 'shimmering scales', 'an aura of light', ' glowing fur', 'bioluminescent organs', 'spikes along its back', 'bunny ears', 'a singular eye'];
 
         function getRandomElement(arr) {
             return arr[Math.floor(Math.random() * arr.length)];
