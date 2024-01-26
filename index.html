@@ -98,30 +98,58 @@
             } catch (error) {
                 displayError('An error occurred while generating the creature.');
                 console.error(error);
-            }
+        
+    }
         }
 
-        function generateImage(description) {
-            // This function would typically make an API call to a service like DALL-E to generate an image.
-            // Since we can't do that here, we'll just simulate the behavior.
+        async function generateImageWithDallE(description) {
+    const apiEndpoint = 'https://api.openai.com/v1/images/generations';
+    const apiKey = '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'; // Replace with your actual OpenAI API key
 
-            // Mock image URL, in a real scenario this would be the URL of the generated image.
-            const imageUrl = 'https://via.placeholder.com/150';
+    try {
+        const response = await fetch(apiEndpoint, {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${apiKey}`, // Authorization header with the API key
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                prompt: description, // The description from your text generator
+                n: 1, // Number of images to generate
+                size: "1024x1024" // Image size
+            })
+        });
 
-            const imageElement = document.createElement('img');
-            imageElement.src = imageUrl;
-            imageElement.alt = description;
-            imageElement.title = description;
-
-            // Remove any existing images before appending the new one
-            const previousImage = document.querySelector('.generator-container img');
-            if (previousImage) {
-                previousImage.remove();
-            }
-
-            // Append the new image to the container
-            document.querySelector('.generator-container').appendChild(imageElement);
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
         }
+
+        const data = await response.json();
+        // Assuming the API returns a URL to the generated image
+        const imageUrl = data.data[0].url; 
+
+        displayGeneratedImage(imageUrl);
+    } catch (error) {
+        console.error('Error generating image:', error);
+        displayError('An error occurred while generating the image.');
+    }
+}
+
+function displayGeneratedImage(imageUrl) {
+    const imageElement = document.createElement('img');
+    imageElement.src = imageUrl;
+    imageElement.alt = 'Generated mythical creature';
+    imageElement.title = 'Generated mythical creature';
+
+    // Remove any existing images before appending the new one
+    const previousImage = document.querySelector('.generator-container img');
+    if (previousImage) {
+        previousImage.remove();
+    }
+
+    // Append the new image to the container
+    document.querySelector('.generator-container').appendChild(imageElement);
+}
     </script>
 </body>
 </html>
